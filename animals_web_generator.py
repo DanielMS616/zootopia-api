@@ -1,4 +1,32 @@
 import json
+import requests
+
+
+API_URL = "https://api.api-ninjas.com/v1/animals"
+API_KEY = ""
+
+
+def get_animals_from_api(animal_name):
+    """
+    Get animal data from the API Ninjas Animals API.
+    The animal name is sent as a GET parameter.
+    The API key is sent in the request headers.
+    """
+
+    params = {
+        "name": animal_name,
+    }
+
+    headers = {
+        "X-Api-Key": API_KEY,
+    }
+
+    response = requests.get(API_URL, params=params, headers=headers)
+
+    # Convert the JSON response into Python data.
+    animals_data = response.json()
+
+    return animals_data
 
 
 def load_data(file_path):
@@ -147,52 +175,26 @@ def serialize_animal(animal_obj):
 def main():
     """Generates an HTML page for animals"""
 
-    animals_data = load_data("animals_data.json")
-    skin_types = get_skin_types(animals_data)
-    selected_skin_type = get_user_skin_type(skin_types)
+    animals_data = get_animals_from_api("Fox")
 
     output = ""
 
-    if selected_skin_type == "quit":
-        output += '<li class="cards__item">\n'
-        output += '  <div class="card__title">Program stopped</div>\n'
-        output += (
-            '  <div class="card__text">'
-            'No skin type was selected. Please run the program again.'
-            '</div>\n'
-        )
-        output += "</li>\n"
+    # Create one HTML card for every animal returned by the API.
+    for animal in animals_data:
+        output += serialize_animal(animal)
 
-    else:
-        for animal in animals_data:
-            if selected_skin_type == "all":
-                output += serialize_animal(animal)
-
-            elif "characteristics" in animal:
-                characteristics = animal["characteristics"]
-
-                if "skin_type" in characteristics:
-                    if characteristics["skin_type"] == selected_skin_type:
-                        output += serialize_animal(animal)
-
-        # Fallback in case future changes produce no matching animals.
-        if output == "":
-            output += '<li class="cards__item">\n'
-            output += '  <div class="card__title">No animals found</div>\n'
-            output += (
-                f'  <div class="card__text">'
-                f'No animals with skin type "{selected_skin_type}" were found.'
-                f'</div>\n'
-            )
-            output += "</li>\n"
-
+    # Read the HTML template file.
     with open("animals_template.html", "r", encoding="utf-8") as template_file:
         template = template_file.read()
 
+    # Replace the placeholder in the template with the generated animal cards.
     new_html = template.replace("__REPLACE_ANIMALS_INFO__", output)
 
+    # Write the final HTML page to animals.html.
     with open("animals.html", "w", encoding="utf-8") as output_file:
         output_file.write(new_html)
+
+    print("Website was successfully generated to the file animals.html.")
 
 
 if __name__ == "__main__":

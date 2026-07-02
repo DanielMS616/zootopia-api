@@ -10,7 +10,7 @@ def main():
     Send a test request to the Animals API and print the response.
     """
 
-    animal_name = "hudfcuihfw"
+    animal_name = "Fox"
 
     # Query parameters are sent with params in a GET request.
     params = {
