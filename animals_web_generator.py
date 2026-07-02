@@ -173,19 +173,27 @@ def serialize_animal(animal_obj):
 
 
 def main():
-    """Generates an HTML page for animals"""
+    """Generates an HTML page for animals selected by the user."""
 
     # Ask the user which animal should be searched in the API.
     animal_name = input("Enter a name of an animal: ")
+    animal_name = animal_name.strip()
 
-    # Get the animal data from te API using the user's input.
+    # Get the animal data from the API using the user's input.
     animals_data = get_animals_from_api(animal_name)
 
     output = ""
 
-    # Create one HTML card for every animal returned by the API.
-    for animal in animals_data:
-        output += serialize_animal(animal)
+    # If the API returns an empty list, no animal was found.
+    if animals_data == []:
+        output += '<li class="cards__item">\n'
+        output += f'  <h2>Das Tier "{animal_name}" existiert nicht.</h2>\n'
+        output += "</li>\n"
+
+    else:
+        # Create one HTML card for every animal returned by the API.
+        for animal in animals_data:
+            output += serialize_animal(animal)
 
     # Read the HTML template file.
     with open("animals_template.html", "r", encoding="utf-8") as template_file:
