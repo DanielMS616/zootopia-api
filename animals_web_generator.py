@@ -175,7 +175,11 @@ def serialize_animal(animal_obj):
 def main():
     """Generates an HTML page for animals"""
 
-    animals_data = get_animals_from_api("Fox")
+    # Ask the user which animal should be searched in the API.
+    animal_name = input("Enter a name of an animal: ")
+
+    # Get the animal data from te API using the user's input.
+    animals_data = get_animals_from_api(animal_name)
 
     output = ""
 
