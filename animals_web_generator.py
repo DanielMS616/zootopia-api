@@ -120,6 +120,12 @@ def main():
     # Get the animal data from the API using the user's input.
     animals_data = data_fetcher.fetch_data(animal_name)
 
+    # If no data could be fetched, stop the program.
+    # This is different from an empty list returned by the API.
+    if animals_data is None:
+        print("Website was not generated because the animal data could not be loaded.")
+        return
+
     output = ""
 
     # If the API returns an empty list, no animal was found.
