@@ -2,7 +2,7 @@ import data_fetcher
 
 
 def serialize_animal(animal_obj):
-    """Converts one animal object into HTML"""
+    """Converts one animal object into HTML."""
 
     output = ""
     output += '<li class="cards__item">\n'
@@ -14,59 +14,93 @@ def serialize_animal(animal_obj):
     output += '    <ul class="card__list">\n'
 
     if "characteristics" in animal_obj:
-        if "diet" in animal_obj["characteristics"]:
+        characteristics = animal_obj["characteristics"]
+
+        if "diet" in characteristics:
             output += (
                 f'      <li class="card__list-item">'
                 f'<strong>Diet:</strong> '
-                f'{animal_obj["characteristics"]["diet"]}</li>\n'
+                f'{characteristics["diet"]}</li>\n'
+            )
+
+        if "common_name" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Common Name:</strong> '
+                f'{characteristics["common_name"]}</li>\n'
+            )
+
+        if "type" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Type:</strong> '
+                f'{characteristics["type"]}</li>\n'
+            )
+
+        if "lifespan" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Lifespan:</strong> '
+                f'{characteristics["lifespan"]}</li>\n'
+            )
+
+        if "weight" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Weight:</strong> '
+                f'{characteristics["weight"]}</li>\n'
+            )
+
+        if "length" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Length:</strong> '
+                f'{characteristics["length"]}</li>\n'
+            )
+
+        if "top_speed" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Top Speed:</strong> '
+                f'{characteristics["top_speed"]}</li>\n'
+            )
+
+        if "skin_type" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Skin Type:</strong> '
+                f'{characteristics["skin_type"]}</li>\n'
+            )
+
+        if "color" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Color:</strong> '
+                f'{characteristics["color"]}</li>\n'
+            )
+
+        if "venomous" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Venomous:</strong> '
+                f'{characteristics["venomous"]}</li>\n'
+            )
+
+        if "aggression" in characteristics:
+            output += (
+                f'      <li class="card__list-item">'
+                f'<strong>Aggression:</strong> '
+                f'{characteristics["aggression"]}</li>\n'
             )
 
     if "locations" in animal_obj:
         if len(animal_obj["locations"]) > 0:
-            output += (
-                f'      <li class="card__list-item">'
-                f'<strong>Location:</strong> '
-                f'{animal_obj["locations"][0]}</li>\n'
-            )
+            locations = ", ".join(animal_obj["locations"])
 
-    if "characteristics" in animal_obj:
-        if "type" in animal_obj["characteristics"]:
             output += (
                 f'      <li class="card__list-item">'
-                f'<strong>Type:</strong> '
-                f'{animal_obj["characteristics"]["type"]}</li>\n'
-            )
-
-    if "characteristics" in animal_obj:
-        if "lifespan" in animal_obj["characteristics"]:
-            output += (
-                f'      <li class="card__list-item">'
-                f'<strong>Lifespan:</strong> '
-                f'{animal_obj["characteristics"]["lifespan"]}</li>\n'
-            )
-
-    if "characteristics" in animal_obj:
-        if "weight" in animal_obj["characteristics"]:
-            output += (
-                f'      <li class="card__list-item">'
-                f'<strong>Weight:</strong> '
-                f'{animal_obj["characteristics"]["weight"]}</li>\n'
-            )
-
-    if "characteristics" in animal_obj:
-        if "top_speed" in animal_obj["characteristics"]:
-            output += (
-                f'      <li class="card__list-item">'
-                f'<strong>Top Speed:</strong> '
-                f'{animal_obj["characteristics"]["top_speed"]}</li>\n'
-            )
-
-    if "characteristics" in animal_obj:
-        if "skin_type" in animal_obj["characteristics"]:
-            output += (
-                f'      <li class="card__list-item">'
-                f'<strong>Skin Type:</strong> '
-                f'{animal_obj["characteristics"]["skin_type"]}</li>\n'
+                f'<strong>Locations:</strong> '
+                f'{locations}</li>\n'
             )
 
     output += "    </ul>\n"
